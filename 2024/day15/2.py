@@ -16,7 +16,26 @@ class Robot:
 
 class Warehouse:
     def __init__(self, data):
-        self.warehouse = [list(_) for _ in data.split("\n")]
+        data = [list(_) for _ in data.split("\n")]
+        self.warehouse = []
+        for row in data:
+            row_double = []
+            for char in row:
+                if char == "@":
+                    row_double.append("@")
+                    row_double.append(".")
+                elif char == "#":
+                    row_double.append("#")
+                    row_double.append("#")
+                elif char == ".":
+                    row_double.append(".")
+                    row_double.append(".")
+                elif char == "O":
+                    row_double.append("[")
+                    row_double.append("]")
+                else:
+                    raise ValueError("Invalid character")
+            self.warehouse.append(row_double)
         self.width = len(self.warehouse[0])
         self.height = len(self.warehouse)
         self.robot = None
@@ -43,42 +62,29 @@ class Warehouse:
                     sum += (100 * y) + x
         return sum
 
-    def move(self, direction):
-        if move not in "^v<>":
-            raise ValueError("Invalid move")
-        match direction:
-            case "^":
-                direction = (0, -1)
-                print("Moving up") if DEBUG else None
-            case "v":
-                direction = (0, 1)
-                print("Moving down") if DEBUG else None
-            case "<":
-                direction = (-1, 0)
-                print("Moving left") if DEBUG else None
-            case ">":
-                direction = (1, 0)
-                print("Moving right") if DEBUG else None
+    def move(self, direction, x, y):
+        dx = direction[0]
+        dy = direction[1]
 
-        x = self.robot.x + direction[0]
-        y = self.robot.y + direction[1]
-
-        while self.warehouse[y][x] == "O":
-            x += direction[0]
-            y += direction[1]
-
-        if self.warehouse[y][x] == "#":
+        if self.warehouse[y + dy][x + dx] == "#":
             return False
-        elif self.warehouse[y][x] == ".":
-            self.warehouse[y][x] = "O"
-            self.warehouse[self.robot.y][self.robot.x] = "."
-            self.robot.x += direction[0]
-            self.robot.y += direction[1]
-            self.warehouse[self.robot.y][self.robot.x] = "@"
+        elif self.warehouse[y + dy][x + dx] == ".":
+            self.warehouse[y + dy][x + dx] = self.warehouse[y][x]
+            self.warehouse[y][x] = "."
             return True
+        elif self.warehouse[y + dy][x + dx] == "[":
+            if self.move(direction, x + dx, y + dy) and self.move(
+                direction, x + dx + 1, y + dy
+            ):
+                return True
+        elif self.warehouse[y + dy][x + dx] == "]":
+            if self.move(direction, x + dx, y + dy) and self.move(
+                direction, x + dx - 1, y + dy
+            ):
+                return False
 
 
-warehouse = Warehouse(input[0])
+warehouse = Warehouse(input[0])1
 moves = [_ for _ in input[1] if _ != "\n"]
 
 if DEBUG:
@@ -90,7 +96,26 @@ if DEBUG:
     print()
 
 for i, move in enumerate(moves):
-    warehouse.move(move)
+    if move not in "^v<>":
+        raise ValueError("Invalid move")
+    match move:
+        case "^":
+            direction = (0, -1)
+            print("Moving up") if DEBUG else None
+        case "v":
+            direction = (0, 1)
+            print("Moving down") if DEBUG else None
+        case "<":
+            direction = (-1, 0)
+            print("Moving left") if DEBUG else None
+        case ">":
+            direction = (1, 0)
+            print("Moving right") if DEBUG else None
+
+    x = warehouse.robot.x
+    y = warehouse.robot.y
+
+    warehouse.move(direction, x, y)
     if DEBUG:
         print(f"Move {i + 1}:")
         print(warehouse)
