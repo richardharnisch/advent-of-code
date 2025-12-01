@@ -1,0 +1,7 @@
+[project]
+name = "advent-of-code"
+version = "0.1.0"
+description = "AoC solutions in Python"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
