@@ -51,8 +51,10 @@ elif [[ "$1" =~ ^[0-9]+$ ]]; then
         echo "Created directory $DAY_DIR"
         
         # Create the files
-        touch "$DAY_DIR/1.py" "$DAY_DIR/1.in" "$DAY_DIR/1.out"
-        touch "$DAY_DIR/2.py" "$DAY_DIR/2.in" "$DAY_DIR/2.out"
+        cp ../template.py "$DAY_DIR/1.py"
+        cp ../template.py "$DAY_DIR/2.py"
+        touch "$DAY_DIR/1.in" "$DAY_DIR/1.out"
+        touch "$DAY_DIR/2.in" "$DAY_DIR/2.out"
         echo "Created files 1.py, 1.in, 1.out, 2.py, 2.in, 2.out in $DAY_DIR"
     else
         cd "$DAY_DIR"
