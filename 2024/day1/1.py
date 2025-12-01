@@ -3,8 +3,8 @@ b = []
 
 line = input()
 
-while line != '':
-    line = line.split('   ')
+while line != "":
+    line = line.split("   ")
     a.append(line[0])
     b.append(line[1])
     try:

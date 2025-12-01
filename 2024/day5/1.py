@@ -2,9 +2,9 @@ import sys
 
 input = sys.stdin.read()
 
-sections = input.strip().split('\n\n')
-rules = [_.split("|") for _ in sections[0].split('\n')]
-updates = [_.split(",") for _ in sections[1].split('\n')]
+sections = input.strip().split("\n\n")
+rules = [_.split("|") for _ in sections[0].split("\n")]
+updates = [_.split(",") for _ in sections[1].split("\n")]
 
 
 def is_ordered_correctly(rules, update):

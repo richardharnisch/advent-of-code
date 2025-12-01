@@ -25,14 +25,14 @@ def get_trails(map, x, y):
         print(f"Found trail ending at {x}, {y}") if DEBUG else None
         trails.add((x, y))
         return trails
-    if map_value(x+1, y) == height+1:
-        trails.update(get_trails(map, x+1, y))
-    if map_value(x-1, y) == height+1:
-        trails.update(get_trails(map, x-1, y))
-    if map_value(x, y+1) == height+1:
-        trails.update(get_trails(map, x, y+1))
-    if map_value(x, y-1) == height+1:
-        trails.update(get_trails(map, x, y-1))
+    if map_value(x + 1, y) == height + 1:
+        trails.update(get_trails(map, x + 1, y))
+    if map_value(x - 1, y) == height + 1:
+        trails.update(get_trails(map, x - 1, y))
+    if map_value(x, y + 1) == height + 1:
+        trails.update(get_trails(map, x, y + 1))
+    if map_value(x, y - 1) == height + 1:
+        trails.update(get_trails(map, x, y - 1))
     return trails
 
 

@@ -8,11 +8,7 @@ input = sys.stdin.read().strip()
 # Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 # Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 
-max_colors = {
-    "red": 12,
-    "green": 13,
-    "blue": 14
-}
+max_colors = {"red": 12, "green": 13, "blue": 14}
 
 
 class Game:
@@ -20,11 +16,7 @@ class Game:
         name, colors = game.split(":")
         self.idx = int(name.split()[1])
         self.draws = [_.strip() for _ in colors.split(";")]
-        self.min_colors = {
-            "red": 0,
-            "green": 0,
-            "blue": 0
-        }
+        self.min_colors = {"red": 0, "green": 0, "blue": 0}
 
         for draw in self.draws:
             colors = draw.split(", ")

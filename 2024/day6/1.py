@@ -2,7 +2,7 @@ import sys
 
 DEBUG = False
 
-input = sys.stdin.read().split('\n')
+input = sys.stdin.read().split("\n")
 
 maze = [[0 for _ in range(len(input[0]))] for _ in range(len(input))]
 
@@ -12,9 +12,9 @@ guard_direction = "up"
 
 for i, line in enumerate(input):
     for j, char in enumerate(line):
-        if char == '#':
+        if char == "#":
             maze[i][j] = -1
-        elif char == '^':
+        elif char == "^":
             guard = [i, j]
 
 

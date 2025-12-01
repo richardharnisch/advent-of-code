@@ -27,8 +27,8 @@ def blink(stones):
                 new_stones[1] = 0
             new_stones[1] += stones[num]
         elif len(str(num)) % 2 == 0:
-            first_half = int(str(num)[:len(str(num)) // 2])
-            second_half = int(str(num)[len(str(num)) // 2:])
+            first_half = int(str(num)[: len(str(num)) // 2])
+            second_half = int(str(num)[len(str(num)) // 2 :])
             if first_half not in new_stones:
                 new_stones[first_half] = 0
             if second_half not in new_stones:

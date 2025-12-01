@@ -10,14 +10,14 @@ def count_xmas(grid, word="XMAS"):
     count = 0
 
     directions = [
-        (0, 1),   # Right
+        (0, 1),  # Right
         (0, -1),  # Left
-        (1, 0),   # Down
+        (1, 0),  # Down
         (-1, 0),  # Up
-        (1, 1),   # Diagonal down-right
+        (1, 1),  # Diagonal down-right
         (1, -1),  # Diagonal down-left
         (-1, 1),  # Diagonal up-right
-        (-1, -1)  # Diagonal up-left
+        (-1, -1),  # Diagonal up-left
     ]
 
     def is_valid_position(x, y):

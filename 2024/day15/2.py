@@ -84,7 +84,7 @@ class Warehouse:
                 return False
 
 
-warehouse = Warehouse(input[0])1
+warehouse = Warehouse(input[0])
 moves = [_ for _ in input[1] if _ != "\n"]
 
 if DEBUG:

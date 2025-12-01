@@ -12,22 +12,23 @@ def count_x_mas(grid):
         return 0 <= x < rows and 0 <= y < cols
 
     def is_x(x, y):
-        if not (is_valid_position(x + 1, y + 1) and
-                is_valid_position(x - 1, y - 1) and
-                is_valid_position(x + 1, y - 1) and
-                is_valid_position(x - 1, y + 1)
-                ):
+        if not (
+            is_valid_position(x + 1, y + 1)
+            and is_valid_position(x - 1, y - 1)
+            and is_valid_position(x + 1, y - 1)
+            and is_valid_position(x - 1, y + 1)
+        ):
             return False
 
         def diagonal(direction):
             dx, dy = 1, 1 - (direction * 2)
-            if grid[x + dx][y + dy] == 'M' and grid[x - dx][y - dy] == 'S':
+            if grid[x + dx][y + dy] == "M" and grid[x - dx][y - dy] == "S":
                 return True
-            if grid[x + dx][y + dy] == 'S' and grid[x - dx][y - dy] == 'M':
+            if grid[x + dx][y + dy] == "S" and grid[x - dx][y - dy] == "M":
                 return True
             return False
 
-        if grid[x][y] == 'A' and diagonal(0) and diagonal(1):
+        if grid[x][y] == "A" and diagonal(0) and diagonal(1):
             return True
 
         return False

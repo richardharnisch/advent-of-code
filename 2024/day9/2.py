@@ -19,8 +19,8 @@ def decompress(disk):
     files = []
     for i, char in enumerate(disk):
         if i % 2 == 0:
-            files.append(File(i//2, int(char), len(out)))
-            out.extend([str(i//2)] * int(char))
+            files.append(File(i // 2, int(char), len(out)))
+            out.extend([str(i // 2)] * int(char))
         else:
             out.extend(["."] * int(char))
     return out, files
@@ -54,9 +54,11 @@ def find_dots(disk, size):
 def move_file(disk, size, pos, name):
     insertion = find_dots(disk, size)
     if insertion == -1 or insertion >= pos:
-        print(
-            f"Could not find {size} consecutive dots for file {name}"
-        ) if DEBUG else None
+        (
+            print(f"Could not find {size} consecutive dots for file {name}")
+            if DEBUG
+            else None
+        )
         print_disk(disk)
         return
     print(f"Moving {name} from {pos} to {insertion}") if DEBUG else None

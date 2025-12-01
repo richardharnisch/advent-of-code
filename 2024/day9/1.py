@@ -9,7 +9,7 @@ def decompress(disk):
     files = 0
     for i, char in enumerate(disk):
         if i % 2 == 0:
-            out.extend([str(i//2)] * int(char))
+            out.extend([str(i // 2)] * int(char))
             files += int(char)
         else:
             out.extend(["."] * int(char))

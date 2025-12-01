@@ -2,11 +2,7 @@ import sys
 
 input = sys.stdin.read().strip()
 
-max_colors = {
-    "red": 12,
-    "green": 13,
-    "blue": 14
-}
+max_colors = {"red": 12, "green": 13, "blue": 14}
 
 
 class Game:

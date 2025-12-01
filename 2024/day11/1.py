@@ -13,8 +13,8 @@ def blink(stones):
         if stone == 0:
             new_stones.append(1)
         elif len(str(stone)) % 2 == 0:
-            first_half = int(str(stone)[:len(str(stone)) // 2])
-            second_half = int(str(stone)[len(str(stone)) // 2:])
+            first_half = int(str(stone)[: len(str(stone)) // 2])
+            second_half = int(str(stone)[len(str(stone)) // 2 :])
             new_stones.append(first_half)
             new_stones.append(second_half)
         else:

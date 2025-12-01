@@ -2,7 +2,7 @@ import sys
 
 DEBUG = False
 
-input = sys.stdin.read().split('\n')
+input = sys.stdin.read().split("\n")
 
 maze = [[0 for _ in range(len(input[0]))] for _ in range(len(input))]
 
@@ -12,9 +12,9 @@ guard_direction = "up"
 
 for i, line in enumerate(input):
     for j, char in enumerate(line):
-        if char == '#':
+        if char == "#":
             maze[i][j] = -1
-        elif char == '^':
+        elif char == "^":
             guard = [i, j]
 
 
@@ -33,9 +33,9 @@ class State:
 
     def __eq__(self, other):
         return (
-            self.x == other.x and
-            self.y == other.y and
-            self.direction == other.direction
+            self.x == other.x
+            and self.y == other.y
+            and self.direction == other.direction
         )
 
     def __hash__(self):
@@ -173,18 +173,12 @@ def can_cause_loop(x, y, states):
 for x, line in enumerate(maze):
     for y, char in enumerate(line):
         print(f"testing obstruction at {x}, {y}...") if DEBUG else None
-        if (
-            maze[x][y] != -1 and
-            guard != [x, y] and
-            can_cause_loop(x, y, states)
-        ):
+        if maze[x][y] != -1 and guard != [x, y] and can_cause_loop(x, y, states):
             original_value = maze[x][y]
             maze[x][y] = -1
             if test_loop(maze, guard):
                 possible_loops += 1
-                print(
-                    f"obstruction at {x}, {y} causes a loop"
-                ) if DEBUG else None
+                print(f"obstruction at {x}, {y} causes a loop") if DEBUG else None
             maze[x][y] = original_value
     print(f"finished row {x}") if DEBUG else None
 
