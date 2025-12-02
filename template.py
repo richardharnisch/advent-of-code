@@ -1,9 +1,10 @@
 import sys
+import os
 
-DEBUG = False
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
+from utils import *
+
+DEBUG = 0
 
 input = sys.stdin.read().strip()
-lines = input.split("\n")
-
-for line in lines:
-    pass
+output = 0
