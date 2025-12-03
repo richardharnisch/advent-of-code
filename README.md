@@ -8,7 +8,7 @@ see <https://adventofcode.com/>
 
 This script automates the setup and execution of Advent of Code challenges.
 
-It supports three main operations: running scripts for a specific day, pushing changes to GitHub, and running all scripts. All commands run in the directory of the current year automatically.
+It supports three main operations: running scripts for a specific day, pushing changes to GitHub, and running all scripts. All commands run in the directory of the current year automatically. Running scripts uses the `uv` tool to manage Python environments, so it is required to have `uv` installed.
 
 ### Usage:
 `./run.sh <day_number>`: Creates the directory and files for the specified day if they do not exist, or executes any Python scripts found in the directory if it does exist.
