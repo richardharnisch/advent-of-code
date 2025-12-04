@@ -126,7 +126,7 @@ if DEBUG >= 2 and frames:
             "ffmpeg",
             "-y",
             "-framerate",
-            "50",
+            "500",
             "-i",
             os.path.join(temp_dir, "frame_%05d.png"),
             "-c:v",
