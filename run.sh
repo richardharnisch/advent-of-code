@@ -34,7 +34,7 @@ elif [ "$1" == "all" ]; then
                     input_file="${py_file%.py}.in"
                     output_file="${py_file%.py}.out"
                     if [ -f "$input_file" ]; then
-                        uv run python "$py_file" < "$input_file" > "$output_file"
+                        ../../.venv/bin/python3 "$py_file" < "$input_file" > "$output_file"
                         echo "Executed $py_file in $dir with input from $input_file and output to $output_file"
                     else
                         echo "Input file $input_file not found for $py_file in $dir"
@@ -65,7 +65,7 @@ elif [[ "$1" =~ ^[0-9]+$ ]]; then
                 input_file="${py_file%.py}.in"
                 output_file="${py_file%.py}.out"
                 if [ -f "$input_file" ]; then
-                    uv run python "$py_file" < "$input_file" > "$output_file"
+                    ../../.venv/bin/python "$py_file" < "$input_file" > "$output_file"
                     echo "Executed $py_file with input from $input_file and output to $output_file"
                 else
                     echo "Input file $input_file not found for $py_file"
