@@ -1,3 +1,6 @@
+from typing import Any, List, Tuple, Iterable
+
+
 def divisors(n: int) -> list[int]:
     """
     Returns a list of integer divisors of a number n, excluding n.
@@ -41,3 +44,81 @@ def all_equal(list: list) -> bool:
     bool: True if all elements are equal, False otherwise.
     """
     return all(x == list[0] for x in list)
+
+
+def get_neighborhood(
+    grid: Iterable[Iterable[Any]],
+    coord: Tuple[int, int],
+    use_diagonal: bool = True,
+    pad_value: Any = None,
+) -> List[List[Any]]:
+    """
+    Return a 3x3 neighborhood around coord in grid.
+
+    - grid: list of lists with arbitrary contents
+    - coord: (row, col) in grid
+    - use_diagonal: if False, diagonal positions are filled with pad_value
+    - pad_value: used for out-of-bounds positions and (optionally) diagonals
+
+    Handles ragged rows (rows of different lengths).
+    """
+    row, col = coord
+    neighborhood: List[List[Any]] = []
+
+    for dr in (-1, 0, 1):
+        row_vals: List[Any] = []
+        for dc in (-1, 0, 1):
+            r = row + dr
+            c = col + dc
+
+            # If diagonals are disabled and this is a diagonal cell, pad it.
+            if not use_diagonal and dr != 0 and dc != 0:
+                row_vals.append(pad_value)
+                continue
+
+            # Check bounds (including ragged rows)
+            if 0 <= r < len(grid) and 0 <= c < len(grid[r]):
+                row_vals.append(grid[r][c])
+            else:
+                row_vals.append(pad_value)
+
+        neighborhood.append(row_vals)
+
+    return neighborhood
+
+
+def count_nested(list: Iterable, value: Any) -> int:
+    """
+    Counts occurrences of value in a nested list.
+
+    Parameters:
+    list (list): The nested list to search.
+    value (Any): The value to count.
+
+    Returns:
+    int: The count of occurrences of value in the nested list.
+    """
+    count = 0
+    for item in list:
+        if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
+            count += count_nested(item, value)
+        elif item == value:
+            count += 1
+    return count
+
+
+if __name__ == "__main__":
+    assert divisors(28) == [1, 2, 4, 7, 14]
+    assert split_str("abcdefgh", 2) == ["ab", "cd", "ef", "gh"]
+    assert all_equal([1, 1, 1])
+    assert not all_equal([1, 2, 1])
+    array = [
+        [1, 2, 3],
+        [4, None, 6],
+        [7, 8, 9],
+    ]
+    assert get_neighborhood(array, (0, 0), use_diagonal=True, pad_value=None) == [
+        [None, None, None],
+        [None, 1, 2],
+        [None, 4, None],
+    ]
