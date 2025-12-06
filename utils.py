@@ -1,4 +1,5 @@
-from typing import Any, List, Tuple, Iterable
+from typing import Any, List, Literal, Tuple, Iterable
+import inspect
 
 
 def divisors(n: int) -> list[int]:
@@ -105,6 +106,33 @@ def count_nested(list: Iterable, value: Any) -> int:
         elif item == value:
             count += 1
     return count
+
+
+def dprint(
+    *values: object,
+    level: int | None = None,
+    **print_kwargs: Any,
+) -> None:
+    """
+    Debug print function that uses the DEBUG variable from the caller's module.
+    Works like print(*values, **print_kwargs), with an extra 'level' kwarg.
+    """
+    frame = inspect.currentframe()
+    if frame is None:
+        raise RuntimeError("Could not get caller frame for dprint")
+
+    try:
+        caller_frame = frame.f_back
+        if caller_frame is None:
+            raise RuntimeError("Could not get caller frame for dprint")
+
+        DEBUG = caller_frame.f_globals.get("DEBUG", False)
+
+        if (level is None and DEBUG) or (level is not None and DEBUG >= level):
+            print(*values, **print_kwargs)
+    finally:
+        # avoid reference cycles with frames
+        del frame
 
 
 if __name__ == "__main__":
