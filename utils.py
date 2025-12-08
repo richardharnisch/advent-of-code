@@ -48,7 +48,7 @@ def all_equal(list: list) -> bool:
 
 
 def get_neighborhood(
-    grid: Iterable[Iterable[Any]],
+    grid: List[List[Any]],
     coord: Tuple[int, int],
     use_diagonal: bool = True,
     pad_value: Any = None,
@@ -135,6 +135,75 @@ def dprint(
         del frame
 
 
+def to_int(num):
+    """
+    Converts a numeric string or a number word (zero to nine) to an integer.
+    """
+    if num.isdigit():
+        return int(num)
+    else:
+        word_to_num = {
+            "zero": 0,
+            "one": 1,
+            "two": 2,
+            "three": 3,
+            "four": 4,
+            "five": 5,
+            "six": 6,
+            "seven": 7,
+            "eight": 8,
+            "nine": 9,
+        }
+        return word_to_num[num]
+
+
+def getitem_safe(
+    collection: Any,
+    index: int,
+    default: Any = None,
+) -> Any:
+    """
+    Safely gets an item from a collection by index, returning a default value if the index is out of bounds.
+
+    Parameters:
+    collection (Any): The collection to get the item from.
+    index (int): The index of the item to get.
+    default (Any): The default value to return if the index is out of bounds.
+
+    Returns:
+    Any: The item at the specified index, or the default value if the index is out of bounds.
+    """
+    try:
+        return collection[index]
+    except IndexError:
+        return default
+
+
+def distance(start: tuple, end: tuple, measure: str = "euclidean") -> float:
+    """
+    Calculate the distance between two points in n-dimensional space.
+    Can do euclidean or manhattan distance.
+
+    Params:
+    start (tuple): The starting point coordinates.
+    end (tuple): The ending point coordinates.
+    measure (str): The distance measure to use ("euclidean" or "manhattan").
+    """
+    if measure == "euclidean":
+        return sum((s - e) ** 2 for s, e in zip(start, end)) ** 0.5
+    elif measure == "manhattan":
+        return sum(abs(s - e) for s, e in zip(start, end))
+    else:
+        raise ValueError(f"Unknown distance measure: {measure}")
+
+
+def concat_numbers(a: int, b: int) -> int:
+    """
+    Concatenate two integers and return the result as an integer.
+    """
+    return int(str(a) + str(b))
+
+
 if __name__ == "__main__":
     assert divisors(28) == [1, 2, 4, 7, 14]
     assert split_str("abcdefgh", 2) == ["ab", "cd", "ef", "gh"]
@@ -150,3 +219,6 @@ if __name__ == "__main__":
         [None, 1, 2],
         [None, 4, None],
     ]
+    assert to_int("five") == 5
+    assert to_int("3") == 3
+    assert getitem_safe([1, 2, 3], 5, default=0) == 0
