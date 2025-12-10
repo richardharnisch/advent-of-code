@@ -1,5 +1,6 @@
 from typing import Any, List, Literal, Tuple, Iterable
 import inspect
+import math
 
 
 def divisors(n: int) -> list[int]:
@@ -135,6 +136,61 @@ def dprint(
         del frame
 
 
+def dprint_list(
+    list: Iterable[Any],
+    level: int | None = None,
+) -> None:
+    """
+    Debug print function for iterables, with one item per line.
+    """
+
+    frame = inspect.currentframe()
+    if frame is None:
+        raise RuntimeError("Could not get caller frame for dprint")
+
+    try:
+        caller_frame = frame.f_back
+        if caller_frame is None:
+            raise RuntimeError("Could not get caller frame for dprint")
+
+        DEBUG = caller_frame.f_globals.get("DEBUG", False)
+
+        if (level is None and DEBUG) or (level is not None and DEBUG >= level):
+            for item in list:
+                print(item)
+    finally:
+        # avoid reference cycles with frames
+        del frame
+
+
+def dprint_grid(
+    grid: Iterable[Iterable[Any]],
+    level: int | None = None,
+) -> None:
+    """
+    Debug print function for 2d grids, assuming the same amount of columns in each row
+    and the same amount of characters per cell.
+    """
+
+    frame = inspect.currentframe()
+    if frame is None:
+        raise RuntimeError("Could not get caller frame for dprint")
+
+    try:
+        caller_frame = frame.f_back
+        if caller_frame is None:
+            raise RuntimeError("Could not get caller frame for dprint")
+
+        DEBUG = caller_frame.f_globals.get("DEBUG", False)
+
+        if (level is None and DEBUG) or (level is not None and DEBUG >= level):
+            for row in grid:
+                print("".join(str(cell) for cell in row))
+    finally:
+        # avoid reference cycles with frames
+        del frame
+
+
 def to_int(num):
     """
     Converts a numeric string or a number word (zero to nine) to an integer.
@@ -202,6 +258,47 @@ def concat_numbers(a: int, b: int) -> int:
     Concatenate two integers and return the result as an integer.
     """
     return int(str(a) + str(b))
+
+
+def lines_cross(
+    line_1: Tuple[Tuple[int, int], Tuple[int, int]],
+    line_2: Tuple[Tuple[int, int], Tuple[int, int]],
+) -> bool:
+    """
+    Check if two line segments cross (not just intersect).
+
+    "Cross" here means they intersect strictly inside both segments:
+    - Touching at endpoints does NOT count.
+    - Colinear overlapping does NOT count.
+    """
+
+    (x1, y1), (x2, y2) = line_1
+    (x3, y3), (x4, y4) = line_2
+
+    def cross(ax, ay, bx, by, cx, cy) -> int:
+        """Cross product of AB x AC (sign only)."""
+        return (bx - ax) * (cy - ay) - (by - ay) * (cx - ax)
+
+    def sign(v: int) -> int:
+        if v > 0:
+            return 1
+        if v < 0:
+            return -1
+        return 0
+
+    c1 = cross(x1, y1, x2, y2, x3, y3)
+    c2 = cross(x1, y1, x2, y2, x4, y4)
+    c3 = cross(x3, y3, x4, y4, x1, y1)
+    c4 = cross(x3, y3, x4, y4, x2, y2)
+
+    s1, s2, s3, s4 = map(sign, (c1, c2, c3, c4))
+
+    # If any are colinear (0), then they don't "cross" in the strict sense
+    if 0 in (s1, s2, s3, s4):
+        return False
+
+    # Proper crossing: each segment straddles the other
+    return s1 != s2 and s3 != s4
 
 
 if __name__ == "__main__":
