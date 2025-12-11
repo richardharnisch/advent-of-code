@@ -11,7 +11,7 @@ This script automates the setup and execution of Advent of Code challenges.
 It supports three main operations: running scripts for a specific day, pushing changes to GitHub, and running all scripts. All commands run in the directory of the current year automatically. Running scripts assumes a usable python environment at `.venv` with an interpreter at `.venv/bin/python3`. I use `uv` for this, see the `pyproject.toml` for details. 
 
 ### Usage:
-`./run.sh <day_number>`: Creates the directory and files for the specified day if they do not exist, or executes any Python scripts found in the directory if it does exist.
+`./run.sh <day_number> [script_name]`: Creates the directory and files for the specified day if they do not exist, or executes any Python scripts found in the directory if it does exist. Optionally specify a script name to run only that script.
 
 `./run.sh push`: Commits all changes with a message containing the current day number and pushes to GitHub.
 
@@ -28,6 +28,8 @@ It supports three main operations: running scripts for a specific day, pushing c
 
 ### Examples:
 `./run.sh 1` - Sets up or runs the scripts for day 1.
+
+`./run.sh 9 2` - Runs only script 2 for day 9.
 
 `./run.sh push` - Commits and pushes all changes to GitHub.
 

@@ -2,7 +2,7 @@
 
 # Check if an argument is provided
 if [ -z "$1" ]; then
-    echo "Usage: $0 <day_number> | push | all"
+    echo "Usage: $0 <day_number> [script_name] | push | all"
     exit 1
 fi
 
@@ -59,8 +59,10 @@ elif [[ "$1" =~ ^[0-9]+$ ]]; then
     else
         cd "$DAY_DIR"
 
-        # Check for any Python files and run them
-        for py_file in *.py; do
+        # Check if a specific script is requested
+        if [ -n "$2" ]; then
+            # Run only the specified script
+            py_file="$2.py"
             if [ -f "$py_file" ]; then
                 input_file="${py_file%.py}.in"
                 output_file="${py_file%.py}.out"
@@ -70,11 +72,28 @@ elif [[ "$1" =~ ^[0-9]+$ ]]; then
                 else
                     echo "Input file $input_file not found for $py_file"
                 fi
+            else
+                echo "Script $py_file not found in $DAY_DIR"
+                exit 1
             fi
-        done
+        else
+            # Check for any Python files and run them
+            for py_file in *.py; do
+                if [ -f "$py_file" ]; then
+                    input_file="${py_file%.py}.in"
+                    output_file="${py_file%.py}.out"
+                    if [ -f "$input_file" ]; then
+                        ../../.venv/bin/python "$py_file" < "$input_file" > "$output_file"
+                        echo "Executed $py_file with input from $input_file and output to $output_file"
+                    else
+                        echo "Input file $input_file not found for $py_file"
+                    fi
+                fi
+            done
+        fi
     fi
 else
     echo "Invalid argument: $1"
-    echo "Usage: $0 <day_number> | push | all"
+    echo "Usage: $0 <day_number> [script_name] | push | all"
     exit 1
 fi
