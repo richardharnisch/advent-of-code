@@ -301,6 +301,43 @@ def lines_cross(
     return s1 != s2 and s3 != s4
 
 
+def combinations(n: int, k: int) -> set[tuple[int]]:
+    """
+    Returns all possible combinations of k elements from a set of n elements (0 to n-1).
+    Returns a set of tuples, where each tuple is a combination defined by the indices of the selected elements.
+    """
+    # bro this shit took me like 20 minutes to think with my head and a piece of paper and then
+    # i write the signature and docstring and copilot autocompletes the whole fucking thing fuck my life man omfg
+    result = set()
+    if k == 1:
+        result = {(i,) for i in range(n)}
+    else:
+        for i in range(n):
+            for tail in combinations(n - i - 1, k - 1):
+                result.add((i,) + tuple(x + i + 1 for x in tail))
+    return result
+
+
+def stars_and_bars(bins: int, items: int) -> set[tuple[int]]:
+    """
+    Generates all possible stars and bins type combinations for a given number of bins and items.
+    Returns a set of combinations, where each combination is represented as a tuple of integers,
+    where each integer is how many items are in that bin.
+    """
+    combos = combinations(bins + items - 1, bins - 1)
+    output = set()
+    for combo in combos:
+        combination = [0 for _ in range(bins)]
+        for i, index in enumerate(combo):
+            if i == 0:
+                combination[0] = index
+            else:
+                combination[i] = index - combo[i - 1] - 1
+        combination[-1] = items - sum(combination[:-1])
+        output.add(tuple(combination))
+    return output
+
+
 if __name__ == "__main__":
     assert divisors(28) == [1, 2, 4, 7, 14]
     assert split_str("abcdefgh", 2) == ["ab", "cd", "ef", "gh"]
@@ -319,3 +356,12 @@ if __name__ == "__main__":
     assert to_int("five") == 5
     assert to_int("3") == 3
     assert getitem_safe([1, 2, 3], 5, default=0) == 0
+    assert combinations(4, 2) == {(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)}
+    assert stars_and_bars(3, 2) == {
+        (0, 0, 2),
+        (0, 1, 1),
+        (0, 2, 0),
+        (1, 0, 1),
+        (1, 1, 0),
+        (2, 0, 0),
+    }
