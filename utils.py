@@ -1,6 +1,5 @@
 from typing import Any, List, Literal, Optional, Set, Tuple, Iterable
 import inspect
-import math
 
 
 def divisors(n: int) -> List[int]:
@@ -45,7 +44,7 @@ def all_equal(list: List) -> bool:
     Returns:
     bool: True if all elements are equal, False otherwise.
     """
-    return all(x == List[0] for x in list)
+    return all(x == list[0] for x in list)
 
 
 def get_neighborhood(
@@ -235,7 +234,9 @@ def getitem_safe(
         return default
 
 
-def distance(start: Tuple, end: Tuple, measure: str = "euclidean") -> float:
+def distance(
+    start: Tuple, end: Tuple, measure: Literal["euclidean", "manhattan"] = "euclidean"
+) -> float:
     """
     Calculate the distance between two points in n-dimensional space.
     Can do euclidean or manhattan distance.
@@ -338,6 +339,16 @@ def stars_and_bars(bins: int, items: int) -> Set[Tuple[int]]:
     return output
 
 
+def number_to_letter(n: int) -> str:
+    """
+    Converts a number to its corresponding lowercase letter (0 -> 'a', 1 -> 'b', ..., 25 -> 'z').
+    """
+    if 0 <= n < 26:
+        return chr(ord("a") + n)
+    else:
+        raise ValueError("Input number must be in the range 0-25.")
+
+
 if __name__ == "__main__":
     assert divisors(28) == [1, 2, 4, 7, 14]
     assert split_str("abcdefgh", 2) == ["ab", "cd", "ef", "gh"]
@@ -365,3 +376,6 @@ if __name__ == "__main__":
         (1, 1, 0),
         (2, 0, 0),
     }
+    assert number_to_letter(0) == "a"
+    assert number_to_letter(25) == "z"
+    print("All tests passed.")
