@@ -1,9 +1,9 @@
-from typing import Any, List, Literal, Tuple, Iterable
+from typing import Any, List, Literal, Optional, Set, Tuple, Iterable
 import inspect
 import math
 
 
-def divisors(n: int) -> list[int]:
+def divisors(n: int) -> List[int]:
     """
     Returns a list of integer divisors of a number n, excluding n.
 
@@ -16,7 +16,7 @@ def divisors(n: int) -> list[int]:
     return [i for i in range(1, n) if n % i == 0]
 
 
-def split_str(str: str, n: int) -> list[str]:
+def split_str(str: str, n: int) -> List[str]:
     """
     Splits a string into parts of length n.
 
@@ -35,7 +35,7 @@ def split_str(str: str, n: int) -> list[str]:
     return [str[i : i + n] for i in range(0, len(str), n)]
 
 
-def all_equal(list: list) -> bool:
+def all_equal(list: List) -> bool:
     """
     Checks if all elements in a list are equal.
 
@@ -45,7 +45,7 @@ def all_equal(list: list) -> bool:
     Returns:
     bool: True if all elements are equal, False otherwise.
     """
-    return all(x == list[0] for x in list)
+    return all(x == List[0] for x in list)
 
 
 def get_neighborhood(
@@ -111,7 +111,7 @@ def count_nested(list: Iterable, value: Any) -> int:
 
 def dprint(
     *values: object,
-    level: int | None = None,
+    level: Optional[int] = None,
     **print_kwargs: Any,
 ) -> None:
     """
@@ -138,7 +138,7 @@ def dprint(
 
 def dprint_list(
     list: Iterable[Any],
-    level: int | None = None,
+    level: Optional[int] = None,
 ) -> None:
     """
     Debug print function for iterables, with one item per line.
@@ -165,7 +165,7 @@ def dprint_list(
 
 def dprint_grid(
     grid: Iterable[Iterable[Any]],
-    level: int | None = None,
+    level: Optional[int] = None,
 ) -> None:
     """
     Debug print function for 2d grids, assuming the same amount of columns in each row
@@ -191,7 +191,7 @@ def dprint_grid(
         del frame
 
 
-def to_int(num):
+def to_int(num: str) -> int:
     """
     Converts a numeric string or a number word (zero to nine) to an integer.
     """
@@ -235,7 +235,7 @@ def getitem_safe(
         return default
 
 
-def distance(start: tuple, end: tuple, measure: str = "euclidean") -> float:
+def distance(start: Tuple, end: Tuple, measure: str = "euclidean") -> float:
     """
     Calculate the distance between two points in n-dimensional space.
     Can do euclidean or manhattan distance.
@@ -301,7 +301,7 @@ def lines_cross(
     return s1 != s2 and s3 != s4
 
 
-def combinations(n: int, k: int) -> set[tuple[int]]:
+def combinations(n: int, k: int) -> Set[Tuple[int]]:
     """
     Returns all possible combinations of k elements from a set of n elements (0 to n-1).
     Returns a set of tuples, where each tuple is a combination defined by the indices of the selected elements.
@@ -318,7 +318,7 @@ def combinations(n: int, k: int) -> set[tuple[int]]:
     return result
 
 
-def stars_and_bars(bins: int, items: int) -> set[tuple[int]]:
+def stars_and_bars(bins: int, items: int) -> Set[Tuple[int]]:
     """
     Generates all possible stars and bins type combinations for a given number of bins and items.
     Returns a set of combinations, where each combination is represented as a tuple of integers,
