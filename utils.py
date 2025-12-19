@@ -7,10 +7,10 @@ def divisors(n: int) -> List[int]:
     Returns a list of integer divisors of a number n, excluding n but including 1.
 
     Args:
-    n (int): The number to find divisors for.
+        n (int): The number to find divisors for.
 
     Returns:
-    list: A list of divisors of n.
+        list: A list of divisors of n.
     """
     return [i for i in range(1, n) if n % i == 0]
 
@@ -21,14 +21,14 @@ def split_str(str: str, n: int) -> List[str]:
     otherwise raises a ValueError.
 
     Args:
-    str (str): The string to split.
-    n (int): The length of each part.
+        str (str): The string to split.
+        n (int): The length of each part.
 
     Returns:
-    list: A list of string parts.
+        list: A list of string parts.
 
     Raises:
-    ValueError: If the length of the string is not divisible by n.
+        ValueError: If the length of the string is not divisible by n.
     """
     if len(str) % n != 0:
         raise ValueError("String length is not divisible by n")
@@ -40,10 +40,10 @@ def all_equal(list: List) -> bool:
     Checks if all elements in a list are equal.
 
     Args:
-    list (list): The list to check.
+        list (list): The list to check.
 
     Returns:
-    bool: True if all elements are equal, False otherwise.
+        bool: True if all elements are equal, False otherwise.
     """
     return all(x == list[0] for x in list)
 
@@ -55,15 +55,16 @@ def get_neighborhood(
     pad_value: Any = None,
 ) -> List[List[Any]]:
     """
-    Return a 3x3 neighborhood around coord in grid.
+    Return a 3x3 neighborhood around coord in grid. Handles ragged rows (rows of different lengths).
 
     Args:
-    grid (list): list of lists with arbitrary contents
-    coord (tuple): (row, col) in grid
-    use_diagonal (bool): if False, diagonal positions are filled with pad_value
-    pad_value (Any): used for out-of-bounds positions and (optionally) diagonals
+        grid (list): list of lists with arbitrary contents
+        coord (tuple): (row, col) in grid
+        use_diagonal (bool): if False, diagonal positions are filled with pad_value
+        pad_value (Any): used for out-of-bounds positions and (optionally) diagonals
 
-    Handles ragged rows (rows of different lengths).
+    Returns:
+        list: A 3x3 list of lists representing the neighborhood.
     """
     row, col = coord
     neighborhood: List[List[Any]] = []
@@ -95,11 +96,11 @@ def count_nested(list: Iterable, value: Any) -> int:
     Counts occurrences of value in a nested list.
 
     Args:
-    list (list): The nested list to search.
-    value (Any): The value to count.
+        list (list): The nested list to search.
+        value (Any): The value to count.
 
     Returns:
-    int: The count of occurrences of value in the nested list.
+        int: The count of occurrences of value in the nested list.
     """
     count = 0
     for item in list:
@@ -120,9 +121,12 @@ def dprint(
     Works like print(*values, **print_kwargs), with an extra 'level' kwarg.
 
     Args:
-    *values (object): The values to print.
-    level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
-    **print_kwargs (Any): Additional keyword arguments to pass to the print function.
+        *values (object): The values to print.
+        level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
+        **print_kwargs (Any): Additional keyword arguments to pass to the print function.
+
+    Returns:
+        None
     """
     frame = inspect.currentframe()
     if frame is None:
@@ -150,11 +154,11 @@ def dprint_list(
     Debug print function for iterables, with one item per line.
 
     Args:
-    list (Iterable[Any]): The iterable to print.
-    level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
+        list (Iterable[Any]): The iterable to print.
+        level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
 
     Returns:
-    None
+        None
     """
 
     frame = inspect.currentframe()
@@ -185,11 +189,11 @@ def dprint_grid(
     and the same amount of characters per cell.
 
     Args:
-    grid (Iterable[Iterable[Any]]): The 2D grid to print.
-    level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
+        grid (Iterable[Iterable[Any]]): The 2D grid to print.
+        level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
 
     Returns:
-    None
+        None
     """
 
     frame = inspect.currentframe()
@@ -216,10 +220,10 @@ def to_int(num: str) -> int:
     Converts a numeric string or a number word (zero to nine) to an integer.
 
     Args:
-    num (str): The numeric string or number word to convert.
+        num (str): The numeric string or number word to convert.
 
     Returns:
-    int: The corresponding integer.
+        int: The corresponding integer.
     """
     if num.isdigit():
         return int(num)
@@ -248,12 +252,12 @@ def getitem_safe(
     Safely gets an item from a collection by index, returning a default value if the index is out of bounds.
 
     Parameters:
-    collection (Any): The collection to get the item from.
-    index (int): The index of the item to get.
-    default (Any): The default value to return if the index is out of bounds.
+        collection (Any): The collection to get the item from.
+        index (int): The index of the item to get.
+        default (Any): The default value to return if the index is out of bounds.
 
     Returns:
-    Any: The item at the specified index, or the default value if the index is out of bounds.
+        Any: The item at the specified index, or the default value if the index is out of bounds.
     """
     try:
         return collection[index]
@@ -269,12 +273,12 @@ def distance(
     Can do euclidean or manhattan distance.
 
     Args:
-    start (tuple): The starting point coordinates.
-    end (tuple): The ending point coordinates.
-    measure (str): The distance measure to use ("euclidean" or "manhattan").
+        start (tuple): The starting point coordinates.
+        end (tuple): The ending point coordinates.
+        measure (str): The distance measure to use ("euclidean" or "manhattan").
 
     Returns:
-    float: The calculated distance between the two points.
+        float: The calculated distance between the two points.
     """
     if measure == "euclidean":
         return sum((s - e) ** 2 for s, e in zip(start, end)) ** 0.5
@@ -289,11 +293,11 @@ def concat_numbers(a: int, b: int) -> int:
     Concatenate two integers and return the result as an integer.
 
     Args:
-    a (int): The first integer.
-    b (int): The second integer.
+        a (int): The first integer.
+        b (int): The second integer.
 
     Returns:
-    int: The concatenated integer.
+        int: The concatenated integer.
     """
     return int(str(a) + str(b))
 
@@ -310,11 +314,11 @@ def lines_cross(
     - Colinear overlapping does NOT count.
 
     Args:
-    line_1 (tuple): A tuple of two points defining the first line segment.
-    line_2 (tuple): A tuple of two points defining the second line segment.
+        line_1 (tuple): A tuple of two points defining the first line segment.
+        line_2 (tuple): A tuple of two points defining the second line segment.
 
     Returns:
-    bool: True if the line segments cross, False otherwise.
+        bool: True if the line segments cross, False otherwise.
     """
 
     (x1, y1), (x2, y2) = line_1
@@ -352,11 +356,11 @@ def combinations(n: int, k: int) -> Set[Tuple[int]]:
     Returns a set of tuples, where each tuple is a combination defined by the indices of the selected elements.
 
     Args:
-    n (int): The total number of elements.
-    k (int): The number of elements in each combination.
+        n (int): The total number of elements.
+        k (int): The number of elements in each combination.
 
     Returns:
-    set: A set of tuples, where each tuple represents a combination of k elements.
+        set: A set of tuples, where each tuple represents a combination of k elements.
     """
     # bro this shit took me like 20 minutes to think with my head and a piece of paper and then
     # i write the signature and docstring and copilot autocompletes the whole fucking thing fuck my life man omfg
@@ -377,11 +381,11 @@ def stars_and_bars(bins: int, items: int) -> Set[Tuple[int]]:
     where each integer is how many items are in that bin.
 
     Args:
-    bins (int): The number of bins.
-    items (int): The number of items.
+        bins (int): The number of bins.
+        items (int): The number of items.
 
     Returns:
-    set: A set of tuples, where each tuple represents a distribution of items across bins.
+        set: A set of tuples, where each tuple represents a distribution of items across bins.
     """
     combos = combinations(bins + items - 1, bins - 1)
     output = set()
@@ -402,10 +406,10 @@ def number_to_letter(n: int) -> str:
     Converts a number to its corresponding lowercase letter (0 -> 'a', 1 -> 'b', ..., 25 -> 'z').
 
     Args:
-    n (int): The number to convert (0-25).
+        n (int): The number to convert (0-25).
 
     Returns:
-    str: The corresponding lowercase letter.
+        str: The corresponding lowercase letter.
     """
     if 0 <= n < 26:
         return chr(ord("a") + n)
@@ -418,11 +422,11 @@ def parse_int_list(str_list: str, sep: str = " ") -> List[int]:
     Converts a list of numeric strings to a list of integers.
 
     Args:
-    str_list (str): A string representing a list of integers separated by sep.
-    sep (str): The separator used in the input string. Default is a space.
+        str_list (str): A string representing a list of integers separated by sep.
+        sep (str): The separator used in the input string. Default is a space.
 
     Returns:
-    list: A list of integers.
+        list: A list of integers.
     """
     return [int(s.strip()) for s in str_list.split(sep)]
 
@@ -434,12 +438,12 @@ def parse_int_grid(
     Converts a string representation of a grid of numbers into a 2D list of integers.
 
     Args:
-    str_grid (str): A string representing the grid, with rows separated by row_sep and columns by col_sep.
-    row_sep (str): The separator used to split rows. Default is newline.
-    col_sep (str): The separator used to split columns. Default is space.
+        str_grid (str): A string representing the grid, with rows separated by row_sep and columns by col_sep.
+        row_sep (str): The separator used to split rows. Default is newline.
+        col_sep (str): The separator used to split columns. Default is space.
 
     Returns:
-    list: A 2D list of integers representing the grid.
+        list: A 2D list of integers representing the grid.
     """
     return [parse_int_list(row, sep=col_sep) for row in str_grid.strip().split(row_sep)]
 
