@@ -349,6 +349,37 @@ def number_to_letter(n: int) -> str:
         raise ValueError("Input number must be in the range 0-25.")
 
 
+def parse_int_list(str_list: str, sep: str = " ") -> List[int]:
+    """
+    Converts a list of numeric strings to a list of integers.
+
+    Args:
+    str_list (str): A string representing a list of integers separated by sep.
+    sep (str): The separator used in the input string. Default is a space.
+
+    Returns:
+    list: A list of integers.
+    """
+    return [int(s.strip()) for s in str_list.split(sep)]
+
+
+def parse_int_grid(
+    str_grid: str, row_sep: str = "\n", col_sep: str = " "
+) -> List[List[int]]:
+    """
+    Converts a string representation of a grid of numbers into a 2D list of integers.
+
+    Args:
+    str_grid (str): A string representing the grid, with rows separated by row_sep and columns by col_sep.
+    row_sep (str): The separator used to split rows. Default is newline.
+    col_sep (str): The separator used to split columns. Default is space.
+
+    Returns:
+    list: A 2D list of integers representing the grid.
+    """
+    return [parse_int_list(row, sep=col_sep) for row in str_grid.strip().split(row_sep)]
+
+
 if __name__ == "__main__":
     assert divisors(28) == [1, 2, 4, 7, 14]
     assert split_str("abcdefgh", 2) == ["ab", "cd", "ef", "gh"]
