@@ -448,6 +448,37 @@ def parse_int_grid(
     return [parse_int_list(row, sep=col_sep) for row in str_grid.strip().split(row_sep)]
 
 
+def count_paths(start: str, end: str, graph: dict[Any, List[Any]]) -> int:
+    """
+    Count paths from one node to another in a directed acyclic graph (DAG).
+
+    Args:
+        start (str): The starting node.
+        end (str): The ending node.
+        graph (dict): A dictionary representing the DAG, where keys are node names and values are lists of child node names.
+
+    Returns:
+        int: The number of distinct paths from start to end.
+
+    Todo: implement an error if the graph is not a DAG
+    """
+    memoize = {}
+
+    def _count_paths(start: str, end: str, graph: dict) -> int:
+        if start == end:
+            return 1
+        elif start in memoize:
+            return memoize[start]
+        else:
+            count = 0
+            for child in graph[start]:
+                count += _count_paths(child, end, graph)
+            memoize[start] = count
+            return count
+
+    return _count_paths(start, end, graph)
+
+
 if __name__ == "__main__":
     assert divisors(28) == [1, 2, 4, 7, 14]
     assert split_str("abcdefgh", 2) == ["ab", "cd", "ef", "gh"]
@@ -483,4 +514,14 @@ if __name__ == "__main__":
         [4, 5, 6],
         [7, 8, 9],
     ]
+    graph = {
+        "start": ["B", "C"],
+        "B": ["D", "C"],
+        "C": ["D"],
+        "D": ["E", "F"],
+        "E": ["end"],
+        "F": ["end"],
+        "end": [],
+    }
+    assert count_paths("start", "end", graph=graph) == 6
     print("All tests passed.")
