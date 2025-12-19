@@ -478,4 +478,9 @@ if __name__ == "__main__":
     assert number_to_letter(0) == "a"
     assert number_to_letter(25) == "z"
     assert parse_int_list("1 2 3 4 5") == [1, 2, 3, 4, 5]
+    assert parse_int_grid("1 2 3\n4 5 6\n7 8 9") == [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+    ]
     print("All tests passed.")
