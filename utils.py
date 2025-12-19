@@ -4,9 +4,9 @@ import inspect
 
 def divisors(n: int) -> List[int]:
     """
-    Returns a list of integer divisors of a number n, excluding n.
+    Returns a list of integer divisors of a number n, excluding n but including 1.
 
-    Parameters:
+    Args:
     n (int): The number to find divisors for.
 
     Returns:
@@ -17,9 +17,10 @@ def divisors(n: int) -> List[int]:
 
 def split_str(str: str, n: int) -> List[str]:
     """
-    Splits a string into parts of length n.
+    Splits a string into parts of length n. The string length must be divisible by n,
+    otherwise raises a ValueError.
 
-    Params:
+    Args:
     str (str): The string to split.
     n (int): The length of each part.
 
@@ -38,7 +39,7 @@ def all_equal(list: List) -> bool:
     """
     Checks if all elements in a list are equal.
 
-    Parameters:
+    Args:
     list (list): The list to check.
 
     Returns:
@@ -56,10 +57,11 @@ def get_neighborhood(
     """
     Return a 3x3 neighborhood around coord in grid.
 
-    - grid: list of lists with arbitrary contents
-    - coord: (row, col) in grid
-    - use_diagonal: if False, diagonal positions are filled with pad_value
-    - pad_value: used for out-of-bounds positions and (optionally) diagonals
+    Args:
+    grid (list): list of lists with arbitrary contents
+    coord (tuple): (row, col) in grid
+    use_diagonal (bool): if False, diagonal positions are filled with pad_value
+    pad_value (Any): used for out-of-bounds positions and (optionally) diagonals
 
     Handles ragged rows (rows of different lengths).
     """
@@ -92,7 +94,7 @@ def count_nested(list: Iterable, value: Any) -> int:
     """
     Counts occurrences of value in a nested list.
 
-    Parameters:
+    Args:
     list (list): The nested list to search.
     value (Any): The value to count.
 
@@ -116,6 +118,11 @@ def dprint(
     """
     Debug print function that uses the DEBUG variable from the caller's module.
     Works like print(*values, **print_kwargs), with an extra 'level' kwarg.
+
+    Args:
+    *values (object): The values to print.
+    level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
+    **print_kwargs (Any): Additional keyword arguments to pass to the print function.
     """
     frame = inspect.currentframe()
     if frame is None:
@@ -141,6 +148,13 @@ def dprint_list(
 ) -> None:
     """
     Debug print function for iterables, with one item per line.
+
+    Args:
+    list (Iterable[Any]): The iterable to print.
+    level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
+
+    Returns:
+    None
     """
 
     frame = inspect.currentframe()
@@ -169,6 +183,13 @@ def dprint_grid(
     """
     Debug print function for 2d grids, assuming the same amount of columns in each row
     and the same amount of characters per cell.
+
+    Args:
+    grid (Iterable[Iterable[Any]]): The 2D grid to print.
+    level (Optional[int]): The debug level required to print. If None, uses any truthy value of DEBUG.
+
+    Returns:
+    None
     """
 
     frame = inspect.currentframe()
@@ -193,6 +214,12 @@ def dprint_grid(
 def to_int(num: str) -> int:
     """
     Converts a numeric string or a number word (zero to nine) to an integer.
+
+    Args:
+    num (str): The numeric string or number word to convert.
+
+    Returns:
+    int: The corresponding integer.
     """
     if num.isdigit():
         return int(num)
@@ -241,10 +268,13 @@ def distance(
     Calculate the distance between two points in n-dimensional space.
     Can do euclidean or manhattan distance.
 
-    Params:
+    Args:
     start (tuple): The starting point coordinates.
     end (tuple): The ending point coordinates.
     measure (str): The distance measure to use ("euclidean" or "manhattan").
+
+    Returns:
+    float: The calculated distance between the two points.
     """
     if measure == "euclidean":
         return sum((s - e) ** 2 for s, e in zip(start, end)) ** 0.5
@@ -257,6 +287,13 @@ def distance(
 def concat_numbers(a: int, b: int) -> int:
     """
     Concatenate two integers and return the result as an integer.
+
+    Args:
+    a (int): The first integer.
+    b (int): The second integer.
+
+    Returns:
+    int: The concatenated integer.
     """
     return int(str(a) + str(b))
 
@@ -271,6 +308,13 @@ def lines_cross(
     "Cross" here means they intersect strictly inside both segments:
     - Touching at endpoints does NOT count.
     - Colinear overlapping does NOT count.
+
+    Args:
+    line_1 (tuple): A tuple of two points defining the first line segment.
+    line_2 (tuple): A tuple of two points defining the second line segment.
+
+    Returns:
+    bool: True if the line segments cross, False otherwise.
     """
 
     (x1, y1), (x2, y2) = line_1
@@ -306,6 +350,13 @@ def combinations(n: int, k: int) -> Set[Tuple[int]]:
     """
     Returns all possible combinations of k elements from a set of n elements (0 to n-1).
     Returns a set of tuples, where each tuple is a combination defined by the indices of the selected elements.
+
+    Args:
+    n (int): The total number of elements.
+    k (int): The number of elements in each combination.
+
+    Returns:
+    set: A set of tuples, where each tuple represents a combination of k elements.
     """
     # bro this shit took me like 20 minutes to think with my head and a piece of paper and then
     # i write the signature and docstring and copilot autocompletes the whole fucking thing fuck my life man omfg
@@ -324,6 +375,13 @@ def stars_and_bars(bins: int, items: int) -> Set[Tuple[int]]:
     Generates all possible stars and bins type combinations for a given number of bins and items.
     Returns a set of combinations, where each combination is represented as a tuple of integers,
     where each integer is how many items are in that bin.
+
+    Args:
+    bins (int): The number of bins.
+    items (int): The number of items.
+
+    Returns:
+    set: A set of tuples, where each tuple represents a distribution of items across bins.
     """
     combos = combinations(bins + items - 1, bins - 1)
     output = set()
@@ -342,6 +400,12 @@ def stars_and_bars(bins: int, items: int) -> Set[Tuple[int]]:
 def number_to_letter(n: int) -> str:
     """
     Converts a number to its corresponding lowercase letter (0 -> 'a', 1 -> 'b', ..., 25 -> 'z').
+
+    Args:
+    n (int): The number to convert (0-25).
+
+    Returns:
+    str: The corresponding lowercase letter.
     """
     if 0 <= n < 26:
         return chr(ord("a") + n)
@@ -409,4 +473,5 @@ if __name__ == "__main__":
     }
     assert number_to_letter(0) == "a"
     assert number_to_letter(25) == "z"
+    assert parse_int_list("1 2 3 4 5") == [1, 2, 3, 4, 5]
     print("All tests passed.")
